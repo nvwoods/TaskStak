@@ -54,7 +54,7 @@ namespace TaskStak
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/error");
             }
 
             app.UseApplicationInsightsExceptionTelemetry();
@@ -65,7 +65,7 @@ namespace TaskStak
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=App}/{action=Index}/{id?}");
             });
         }
     }
