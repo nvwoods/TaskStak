@@ -7,13 +7,17 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using TaskStak.Services;
 
 namespace TaskStak
 {
     public class Startup
     {
+        private IHostingEnvironment _env;
+
         public Startup(IHostingEnvironment env)
         {
+            _env = env;
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
@@ -33,6 +37,16 @@ namespace TaskStak
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //AddScoped - creates a new instance for each set of requests
+            //AddTransient - creates an instance when required, but then keeps it cached for a bit or something
+            //AddSingleton - Exactly what you'd expect
+            if (_env.IsDevelopment())
+            {
+                services.AddScoped<IMailService, DebugMailService>();
+            } else
+            {
+                //add real stuff.
+            }
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
 
