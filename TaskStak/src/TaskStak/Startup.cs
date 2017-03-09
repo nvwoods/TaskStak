@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using TaskStak.Services;
+using TaskStak.Models;
 
 namespace TaskStak
 {
@@ -22,7 +23,8 @@ namespace TaskStak
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
+                .AddJsonFile("config.json")
+                .AddEnvironmentVariables(); //using this I could add environment variables - MailSettings__ToAddress
 
             if (env.IsDevelopment())
             {
@@ -47,8 +49,11 @@ namespace TaskStak
             {
                 //add real stuff.
             }
+            services.AddSingleton(Configuration);
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
+
+            services.AddDbContext<TaskStakContext>();
 
             services.AddMvc();
         }

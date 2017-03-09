@@ -1,0 +1,7 @@
+{
+  "MailSettings": {
+    "ToAddress": "nvincentwoods@gmail.com"
+  },
+  "ConnectionStrings":
+  "TaskStakContextConnection": "Server=(localdb)\\MSSQLLocalDB; Database=TaskStakDB;Trusted_Connection=true;MultipleActiveResultSets=true"
+}
